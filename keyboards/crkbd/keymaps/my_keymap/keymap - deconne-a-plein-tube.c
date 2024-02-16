@@ -139,8 +139,7 @@ bool oled_task_user() {
 // };
 
 
-// #define MY_LCTL ACTION_TAP_DANCE_DOUBLE(KC_LCTL, KC_ESC)
-#define MY_LCTL KC_LCTL
+#define MY_LCTL ACTION_TAP_DANCE_DOUBLE(KC_LCTL, KC_ESC)
 #define MY_LSFT LM(3, MOD_LSFT)
 
 
@@ -186,35 +185,35 @@ enum custom_keycodes {
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-      // case MYCAPSKEY:
-      //   if (record->tap.count) { // tapped
-      //     if (!record->event.pressed) {
-      //       return false;
-      //     }
+      case MYCAPSKEY:
+        if (record->tap.count) { // tapped
+          if (!record->event.pressed) {
+            return false;
+          }
 
-      //     if (layer_state_is(3)) {
-      //       unregister_mods(MOD_BIT_LSHIFT);
-      //       layer_off(3);
-      //     } else {
-      //       register_mods(MOD_BIT_LSHIFT); // Here is the line that causes behavior issue with mouse 1
-      //       layer_on(3);
-      //     }
-      //   } else { // held
-      //     if (record->event.pressed) {
-      //       register_mods(MOD_BIT_LSHIFT);
-      //       layer_on(3);
-      //     } else {
-      //       layer_off(3);
-      //       unregister_mods(MOD_BIT_LSHIFT);
-      //     }
-      //   }
-      //   return true;
-      //   break;
+          if (layer_state_is(LAYER_SHIFT)) {
+            unregister_mods(MOD_BIT_LSHIFT);
+            layer_off(LAYER_SHIFT);
+          } else {
+            register_mods(MOD_BIT_LSHIFT); // Here is the line that causes behavior issue with mouse 1
+            layer_on(LAYER_SHIFT);
+          }
+        } else { // held
+          if (record->event.pressed) {
+            register_mods(MOD_BIT_LSHIFT);
+            layer_on(LAYER_SHIFT);
+          } else {
+            layer_off(LAYER_SHIFT);
+            unregister_mods(MOD_BIT_LSHIFT);
+          }
+        }
+        return true;
+        break;
       
       case MY_SLASHES:
         // if (record->event.pressed && get_mods() & MOD_BIT(KC_LCTL)) {
           if (record->event.pressed) {
-            if (IS_LAYER_ON(3)){
+            if (IS_LAYER_ON(LAYER_SHIFT)){
                 unregister_mods(MOD_BIT_LSHIFT);
                 unregister_mods(MOD_BIT_RSHIFT);
                 SEND_STRING(SS_LALT(SS_TAP(X_KP_4) SS_TAP(X_KP_7))); // 47 Slash
@@ -235,30 +234,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false;
         break;
 
-      // case MY_E_CIRCONFLEXE:
-      //   if (record->event.pressed) {
-      //     SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_3) SS_TAP(X_KP_6)));
-      //     // unregister_mods(MOD_BIT_LALT);
-      //   }
-      //   return false;
-      //   break;
+      case MY_E_CIRCONFLEXE:
+        if (record->event.pressed) {
+          SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_3) SS_TAP(X_KP_6)));
+          // unregister_mods(MOD_BIT_LALT);
+        }
+        return false;
+        break;
 
-      // case MY_BACKQUOTE:
-      //   if (record->event.pressed) {
-      //     if (IS_LAYER_ON(LAYER_SHIFT)) {
-      //       unregister_mods(MOD_BIT_LSHIFT);
-      //       unregister_mods(MOD_BIT_RSHIFT);
-      //       SEND_STRING(SS_LALT(SS_TAP(X_KP_9) SS_TAP(X_KP_6)));
-      //       // unregister_mods(MOD_BIT_LALT);
-      //       // register_mods(MOD_BIT_LSHIFT);
-      //     }
-      //   }
-      //   return false;
-      //   break;
+      case MY_BACKQUOTE:
+        if (record->event.pressed) {
+          if (IS_LAYER_ON(LAYER_SHIFT)) {
+            unregister_mods(MOD_BIT_LSHIFT);
+            unregister_mods(MOD_BIT_RSHIFT);
+            SEND_STRING(SS_LALT(SS_TAP(X_KP_9) SS_TAP(X_KP_6)));
+            // unregister_mods(MOD_BIT_LALT);
+            // register_mods(MOD_BIT_LSHIFT);
+          }
+        }
+        return false;
+        break;
         
         case MY_QUOTE:
         if (record->event.pressed) {
-          if (IS_LAYER_ON(3)) {
+          if (IS_LAYER_ON(LAYER_SHIFT)) {
             unregister_mods(MOD_BIT_LSHIFT);
             unregister_mods(MOD_BIT_RSHIFT);
             SEND_STRING(SS_LALT(SS_TAP(X_KP_3) SS_TAP(X_KP_4)));
@@ -271,7 +270,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         
         case MY_POINT_VIRGULE:
         if (record->event.pressed) {
-          if (IS_LAYER_ON(3)) {
+          if (IS_LAYER_ON(LAYER_SHIFT)) {
             unregister_mods(MOD_BIT_LSHIFT);
             unregister_mods(MOD_BIT_RSHIFT);
             SEND_STRING(SS_LALT(SS_TAP(X_KP_5) SS_TAP(X_KP_9)));
@@ -284,7 +283,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case MY_DIEZE:
         if (record->event.pressed) {
-          if (IS_LAYER_ON(3)) {
+          if (IS_LAYER_ON(LAYER_SHIFT)) {
             unregister_mods(MOD_BIT_LSHIFT);
             unregister_mods(MOD_BIT_RSHIFT);
             SEND_STRING(SS_LALT(SS_TAP(X_KP_3) SS_TAP(X_KP_5)));
@@ -295,129 +294,129 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false;
         break;
 
-      //   case MY_TILD:
-      //   if (record->event.pressed) {
-      //     if (IS_LAYER_ON(LAYER_SHIFT)) {
-      //       unregister_mods(MOD_BIT_LSHIFT);
-      //       unregister_mods(MOD_BIT_RSHIFT);
-      //       SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_2) SS_TAP(X_KP_6)));
-      //       // unregister_mods(MOD_BIT_LALT);
-      //       // register_mods(MOD_BIT_LSHIFT);
-      //     }
-      //   }
-      //   return false;
-      //   break;
+        case MY_TILD:
+        if (record->event.pressed) {
+          if (IS_LAYER_ON(LAYER_SHIFT)) {
+            unregister_mods(MOD_BIT_LSHIFT);
+            unregister_mods(MOD_BIT_RSHIFT);
+            SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_2) SS_TAP(X_KP_6)));
+            // unregister_mods(MOD_BIT_LALT);
+            // register_mods(MOD_BIT_LSHIFT);
+          }
+        }
+        return false;
+        break;
 
-      // case MY_DOLLAR:
-      //   if (record->event.pressed) {
-      //     SEND_STRING(SS_LALT(SS_TAP(X_KP_3) SS_TAP(X_KP_6)));
-      //     // unregister_mods(MOD_BIT_LALT);
-      //   }
-      //   return false;
-      //   break;
+      case MY_DOLLAR:
+        if (record->event.pressed) {
+          SEND_STRING(SS_LALT(SS_TAP(X_KP_3) SS_TAP(X_KP_6)));
+          // unregister_mods(MOD_BIT_LALT);
+        }
+        return false;
+        break;
 
-      //   case MY_U_GRAVE:
-      //   if (record->event.pressed) {
-      //     unregister_mods(MOD_BIT_LALT);
-      //     unregister_mods(MOD_BIT_RALT);
-      //     SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_5) SS_TAP(X_KP_1)));
-      //     // unregister_mods(MOD_BIT_LALT);
-      //   }
-      //   return false;
-      //   break;
+        case MY_U_GRAVE:
+        if (record->event.pressed) {
+          unregister_mods(MOD_BIT_LALT);
+          unregister_mods(MOD_BIT_RALT);
+          SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_5) SS_TAP(X_KP_1)));
+          // unregister_mods(MOD_BIT_LALT);
+        }
+        return false;
+        break;
 
-      //   case MY_U_CIRC:
-      //   if (record->event.pressed) {
-      //     SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_5) SS_TAP(X_KP_0)));
-      //     // unregister_mods(MOD_BIT_LALT);
-      //   }
-      //   return false;
-      //   break;
+        case MY_U_CIRC:
+        if (record->event.pressed) {
+          SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_5) SS_TAP(X_KP_0)));
+          // unregister_mods(MOD_BIT_LALT);
+        }
+        return false;
+        break;
 
-      //   case MY_A_GRAVE:
-      //   if (record->event.pressed) {
-      //     unregister_mods(MOD_BIT_LALT);
-      //     unregister_mods(MOD_BIT_RALT);
-      //     SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_3) SS_TAP(X_KP_3)));
-      //   }
-      //   return false;
-      //   break;
+        case MY_A_GRAVE:
+        if (record->event.pressed) {
+          unregister_mods(MOD_BIT_LALT);
+          unregister_mods(MOD_BIT_RALT);
+          SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_3) SS_TAP(X_KP_3)));
+        }
+        return false;
+        break;
 
-      //   case MY_A_CIRC:
-      //   if (record->event.pressed) {
-      //     SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_3) SS_TAP(X_KP_1)));
-      //     // unregister_mods(MOD_BIT_LALT);
-      //   }
-      //   return false;
-      //   break;
+        case MY_A_CIRC:
+        if (record->event.pressed) {
+          SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_3) SS_TAP(X_KP_1)));
+          // unregister_mods(MOD_BIT_LALT);
+        }
+        return false;
+        break;
 
-      //   case MY_E_AIGU:
-      //   if (record->event.pressed) {
-      //     unregister_mods(MOD_BIT_LALT);
-      //     unregister_mods(MOD_BIT_RALT);
-      //     SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_3) SS_TAP(X_KP_0)));
-      //     // unregister_mods(MOD_BIT_LALT);
-      //   }
-      //   return false;
-      //   break;
+        case MY_E_AIGU:
+        if (record->event.pressed) {
+          unregister_mods(MOD_BIT_LALT);
+          unregister_mods(MOD_BIT_RALT);
+          SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_3) SS_TAP(X_KP_0)));
+          // unregister_mods(MOD_BIT_LALT);
+        }
+        return false;
+        break;
 
-      //   case MY_E_GRAVE:
-      //   if (record->event.pressed) {
-      //     unregister_mods(MOD_BIT_LALT);
-      //     unregister_mods(MOD_BIT_RALT);
-      //     SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_3) SS_TAP(X_KP_8)));
-      //     // unregister_mods(MOD_BIT_LALT);
-      //   }
-      //   return false;
-      //   break;
+        case MY_E_GRAVE:
+        if (record->event.pressed) {
+          unregister_mods(MOD_BIT_LALT);
+          unregister_mods(MOD_BIT_RALT);
+          SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_3) SS_TAP(X_KP_8)));
+          // unregister_mods(MOD_BIT_LALT);
+        }
+        return false;
+        break;
 
-      //   case MY_E_CIRC:
-      //   if (record->event.pressed) {
-      //     SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_3) SS_TAP(X_KP_6)));
-      //     // unregister_mods(MOD_BIT_LALT);
-      //   }
-      //   return false;
-      //   break;
+        case MY_E_CIRC:
+        if (record->event.pressed) {
+          SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_3) SS_TAP(X_KP_6)));
+          // unregister_mods(MOD_BIT_LALT);
+        }
+        return false;
+        break;
 
-      //   case MY_I_CIRC:
-      //   if (record->event.pressed) {
-      //     unregister_mods(MOD_BIT_LALT);
-      //     unregister_mods(MOD_BIT_RALT);
-      //     SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_4) SS_TAP(X_KP_0)));
-      //     // unregister_mods(MOD_BIT_LALT);
-      //   }
-      //   return false;
-      //   break;
+        case MY_I_CIRC:
+        if (record->event.pressed) {
+          unregister_mods(MOD_BIT_LALT);
+          unregister_mods(MOD_BIT_RALT);
+          SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_4) SS_TAP(X_KP_0)));
+          // unregister_mods(MOD_BIT_LALT);
+        }
+        return false;
+        break;
 
-      //   case MY_O_CIRC:
-      //   if (record->event.pressed) {
-      //     unregister_mods(MOD_BIT_LALT);
-      //     unregister_mods(MOD_BIT_RALT);
-      //     SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_4) SS_TAP(X_KP_7)));
-      //     // unregister_mods(MOD_BIT_LALT);
-      //   }
-      //   return false;
-      //   break;
+        case MY_O_CIRC:
+        if (record->event.pressed) {
+          unregister_mods(MOD_BIT_LALT);
+          unregister_mods(MOD_BIT_RALT);
+          SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_4) SS_TAP(X_KP_7)));
+          // unregister_mods(MOD_BIT_LALT);
+        }
+        return false;
+        break;
 
-      //   case MY_C_CEDILLE:
-      //   if (record->event.pressed) {
-      //     unregister_mods(MOD_BIT_LALT);
-      //     unregister_mods(MOD_BIT_RALT);
-      //     SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_3) SS_TAP(X_KP_5)));
-      //     // unregister_mods(MOD_BIT_LALT);
-      //   }
-      //   return false;
-      //   break;
+        case MY_C_CEDILLE:
+        if (record->event.pressed) {
+          unregister_mods(MOD_BIT_LALT);
+          unregister_mods(MOD_BIT_RALT);
+          SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_3) SS_TAP(X_KP_5)));
+          // unregister_mods(MOD_BIT_LALT);
+        }
+        return false;
+        break;
 
-      //   case MY_EURO:
-      //   if (record->event.pressed) {
-      //     // unregister_mods(MOD_BIT_LALT);
-      //     // unregister_mods(MOD_BIT_RALT);
-      //     SEND_STRING(SS_RALT(SS_TAP(X_E)));
-      //     // unregister_mods(MOD_BIT_LALT);
-      //   }
-      //   return false;  
-      //   break;
+        case MY_EURO:
+        if (record->event.pressed) {
+          // unregister_mods(MOD_BIT_LALT);
+          // unregister_mods(MOD_BIT_RALT);
+          SEND_STRING(SS_RALT(SS_TAP(X_E)));
+          // unregister_mods(MOD_BIT_LALT);
+        }
+        return false;
+        break;
   }
   return true;
 }
@@ -436,7 +435,6 @@ TD(TD_LAYERS),    FR_Q,    FR_W,    KC_E,    KC_R,    KC_T,                     
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI,   MO(5),  KC_SPC,     KC_ENT,   MO(6), KC_RALT
                                       //`--------------------------'  `--------------------------'
-
   ),
   // QWERTY REG
     [1] = LAYOUT_split_3x6_3(
@@ -449,23 +447,21 @@ TD(TD_LAYERS),    FR_Q,    FR_W,    KC_E,    KC_R,    KC_T,                     
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI,   MO(5),  KC_SPC,     KC_ENT,   MO(6), KC_RALT
                                       //`--------------------------'  `--------------------------'
-
   ),
   // COLEMAK FR
     [2] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
 TD(TD_LAYERS),    FR_Q,    FR_W,    KC_F,    KC_P,    KC_G,                         KC_J,    KC_L,    KC_U,    KC_Y,   FR_AT, KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL,    FR_A,    KC_R,    KC_S,    KC_T,    KC_D,                         KC_H,    KC_N,    KC_E,    KC_I,    KC_O, FR_QUOT,
+      MY_LCTL,    FR_A,    KC_R,    KC_S,    KC_T,    KC_D,                         KC_H,    KC_N,    KC_E,    KC_I,    KC_O, FR_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       MY_LSFT,    FR_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_K,    FR_M, FR_COMM,  FR_DOT, FR_QUES,  KC_ESC,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI,   MO(5),  KC_SPC,     KC_ENT,   MO(6), KC_RALT
                                       //`--------------------------'  `--------------------------'
-
   ),
    // SHIFTED COLEMAK FR
-    [3] = LAYOUT_split_3x6_3(
+    [LAYER_SHIFT] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,---------------------------          --------------------------.
       _______, _______, _______, _______, _______, _______,                      _______, _______, _______,          _______, MY_DIEZE, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+          --------+--------+--------|
@@ -475,7 +471,6 @@ TD(TD_LAYERS),    FR_Q,    FR_W,    KC_F,    KC_P,    KC_G,                     
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+          --------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
-
   ),
   // COLEMAK REG
     [4] = LAYOUT_split_3x6_3(
@@ -488,8 +483,8 @@ TD(TD_LAYERS),    FR_Q,    FR_W,    KC_F,    KC_P,    KC_G,                     
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI,   MO(5),  KC_SPC,     KC_ENT,   MO(6), KC_RALT
                                       //`--------------------------'  `--------------------------'
-
   ),
+
     [5] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_TAB,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSPC,
@@ -500,8 +495,8 @@ TD(TD_LAYERS),    FR_Q,    FR_W,    KC_F,    KC_P,    KC_G,                     
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI, _______,  KC_SPC,     KC_ENT,   MO(7), KC_RALT
                                       //`--------------------------'  `--------------------------'
-
   ),
+
     [6] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_TAB, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,
@@ -512,11 +507,11 @@ TD(TD_LAYERS),    FR_Q,    FR_W,    KC_F,    KC_P,    KC_G,                     
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI,   MO(7),  KC_SPC,     KC_ENT, _______, KC_RALT
                                       //`--------------------------'  `--------------------------'
-
   ),
+
     [7] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
