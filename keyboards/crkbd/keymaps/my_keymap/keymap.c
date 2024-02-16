@@ -88,7 +88,17 @@ tap_dance_action_t tap_dance_actions[] = {
 //     return false;
 // }
 
-
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+enum layers{
+  _COLEMAK_FR,
+  _ACCENTS,
+  _SFT_COLEMAK_FR,
+  _QWERTY_REG,
+  _NUMPAD,
+  _SPECIAL_CHAR,
+  _RGB
+};
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 // ================================ OLED DISPLAY ==============================================
@@ -139,7 +149,7 @@ bool oled_task_user() {
 
 // #define MY_LCTL ACTION_TAP_DANCE_DOUBLE(KC_LCTL, KC_ESC)
 #define MY_LCTL KC_LCTL
-#define MY_LSFT LM(3, MOD_LSFT)
+#define MY_LSFT LM(_SFT_COLEMAK_FR, MOD_LSFT)
 
 
 const key_override_t point_virgule_key_override  = ko_make_with_layers(MOD_MASK_SHIFT, FR_COMM, FR_DLR, 1 << 2);
@@ -181,6 +191,14 @@ enum custom_keycodes {
     MY_C_CEDILLE,
     MY_EURO,
 };
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+bool is_accent_layer(void) {
+  return layer_state_is(_ACCENTS);
+}
+bool is_shift_layer(void) {
+  return layer_state_is(_SFT_COLEMAK_FR);
+}
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -223,7 +241,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         
         case MY_POINT_VIRGULE:
         if (record->event.pressed) {
-          if (IS_LAYER_ON(SFT_COLEMAK_FR)) {
+          if (is_shift_layer()) {
             unregister_mods(MOD_BIT_LSHIFT);
             unregister_mods(MOD_BIT_RSHIFT);
             SEND_STRING(SS_LALT(SS_TAP(X_KP_5) SS_TAP(X_KP_9)));
@@ -236,7 +254,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case MY_DIEZE:
         if (record->event.pressed) {
-          if (IS_LAYER_ON(SFT_COLEMAK_FR)) {
+          if (is_shift_layer()) {
             unregister_mods(MOD_BIT_LSHIFT);
             unregister_mods(MOD_BIT_RSHIFT);
             SEND_STRING(SS_LALT(SS_TAP(X_KP_3) SS_TAP(X_KP_5)));
@@ -246,133 +264,124 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         return false;
         break;
-// -------------------------
-case HT_E:
-	if (record->tap.count) { // tapped
-		if (!record->event.pressed) {
-			return false;
-		}
+// // -------------------------
+// case HT_E:
+// 	if (record->tap.count) { // tapped
+// 		if (!record->event.pressed) {
+// 			return false;
+// 		}
 		
-		if (is_grave_layer()) {
-			tap_e_grave();
-		} else {
-			tap_code(KC_E);
-		}
-	} else { // held
-		if (!record->event.pressed) {
-			return false;
-		}
+// 		if (is_grave_layer()) {
+// 			tap_e_grave();
+// 		} else {
+// 			tap_code(KC_E);
+// 		}
+// 	} else { // held
+// 		if (!record->event.pressed) {
+// 			return false;
+// 		}
 		
-		if (is_grave_layer()) {
-			tap_e_circ();
-		} else {
-			tap_e_aigue();
-		}
-	}
+// 		if (is_grave_layer()) {
+// 			tap_e_circ();
+// 		} else {
+// 			tap_e_aigue();
+// 		}
+// 	}
 	
-	return false;
+// 	return false;
 
-case HT_C:
-	if (record->tap.count) {
-		if (record->event.pressed) {
-			tap_code(KC_C);
-		}
-	} else {
-		if (record->event.pressed) {
-			tap_c_ced();
-		}
-	}
-	return false;
+// case HT_C:
+// 	if (record->tap.count) {
+// 		if (record->event.pressed) {
+// 			tap_code(KC_C);
+// 		}
+// 	} else {
+// 		if (record->event.pressed) {
+// 			tap_c_ced();
+// 		}
+// 	}
+// 	return false;
 	
-case HT_A:
-	if (record->tap.count) {
-		if (record->event.pressed) {
-			tap_a_grave();
-		}
-	} else {
-		if (record->event.pressed) {
-			tap_a_circ();
-		}
-	}
+// case HT_A:
+// 	if (record->tap.count) {
+// 		if (record->event.pressed) {
+// 			tap_a_grave();
+// 		}
+// 	} else {
+// 		if (record->event.pressed) {
+// 			tap_a_circ();
+// 		}
+// 	}
 	
-	return false;
+// 	return false;
 
-case HT_U:
-	if (record->tap.count) {
-		if (!record->event.pressed) {
-			return false;
-		}
+// case HT_U:
+// 	if (record->tap.count) {
+// 		if (!record->event.pressed) {
+// 			return false;
+// 		}
 		
-		if (is_grave_layer()) {
-			tap_u_grave();
-		} else {
-			tap_code(KC_U);
-		}
-	} else {
-		if (!record->event.pressed) {
-			return false;
-		}
+// 		if (is_grave_layer()) {
+// 			tap_u_grave();
+// 		} else {
+// 			tap_code(KC_U);
+// 		}
+// 	} else {
+// 		if (!record->event.pressed) {
+// 			return false;
+// 		}
 		
-		if (is_grave_layer()) {
-			tap_u_circ();
-		} else {
-			tap_u_grave();
-		}
-	}
+// 		if (is_grave_layer()) {
+// 			tap_u_circ();
+// 		} else {
+// 			tap_u_grave();
+// 		}
+// 	}
 	
-	return false;
+// 	return false;
 
-case HT_I:
-	if (record->tap.count) {
-		if (!record->event.pressed) {
-			return false;
-		}
+// case HT_I:
+// 	if (record->tap.count) {
+// 		if (!record->event.pressed) {
+// 			return false;
+// 		}
 		
-		if (is_grave_layer()) {
-			tap_i_trema();
-		} else {
-			tap_code(KC_I);
-		}
-	} else {
-		if (record->event.pressed) {
-			tap_i_circ();
-		}
-	}
+// 		if (is_grave_layer()) {
+// 			tap_i_trema();
+// 		} else {
+// 			tap_code(KC_I);
+// 		}
+// 	} else {
+// 		if (record->event.pressed) {
+// 			tap_i_circ();
+// 		}
+// 	}
 	
-	return false;
+// 	return false;
 
-case HT_O:
-	if (record->tap.count) {
-		if (!record->event.pressed) {
-			return false;
-		}
+// case HT_O:
+// 	if (record->tap.count) {
+// 		if (!record->event.pressed) {
+// 			return false;
+// 		}
 		
-		if (is_grave_layer()) {
-			tap_o_circ();
-		} else {
-			tap_code(KC_O);
-		}
-	} else {
-		if (record->event.pressed) {
-			tap_o_circ();
-		}
-	}
+// 		if (is_grave_layer()) {
+// 			tap_o_circ();
+// 		} else {
+// 			tap_code(KC_O);
+// 		}
+// 	} else {
+// 		if (record->event.pressed) {
+// 			tap_o_circ();
+// 		}
+// 	}
 	
-	return false;
-  return true;
-}
+// 	return false;
+//   return true;
+// }
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-enum layers{
-  _COLEMAK_FR,
-  _ACCENTS,
-  _SFT_COLEMAK_FR,
-  _QWERTY_REG,
-  _NUMPAD,
-  _SPECIAL_CHAR,
-  _RGB
-};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // COLEMAK_FR
@@ -389,7 +398,7 @@ TD(TD_LAYERS),    FR_Q,    FR_W,    KC_F,    KC_P,    KC_G,                     
 
   ),
    // SFT_LR_COLEMAK_FR
-    [_ACCENTS] = LAYOUT_split_3x6_3(
+    [_SFT_COLEMAK_FR] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
