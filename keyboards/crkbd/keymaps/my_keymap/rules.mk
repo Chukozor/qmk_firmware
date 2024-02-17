@@ -11,3 +11,6 @@ TAP_DANCE_ENABLE = yes
 SPLIT_KEYBOARD = yes
 RGBLIGHT_ENABLE = yes
 # VIA_ENABLE = YES
+
+SRC += french_symbols.c # include into the compilation
+SRC += helpers.c
