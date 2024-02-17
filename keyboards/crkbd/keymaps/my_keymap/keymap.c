@@ -35,7 +35,7 @@ enum {
 
 void dance_layers_finished (tap_dance_state_t *state, void *user_data) {
   if (state->count == 3) {
-    layer_move(2);
+    layer_move(3);
   } else if (state->count == 2) {
     layer_move(0);
   } else if (state->count == 1) {
@@ -109,17 +109,26 @@ bool oled_task_user() {
 
   switch (get_highest_layer(layer_state)){
     case 0 :
-      oled_write("QWERTY FR ", false);
-      break;
-    case 1 :
-      oled_write("QWERTY REG", false);
-      break;
-    case 2 :
       oled_write("COLEMAK FR ", false);
       break;
+    case 1 :
+      oled_write("ACCENTS      ", false);
+      break;
+    case 2 :
+      oled_write("SHIFT        ", false);
+      break;
     case 3 :
-      oled_write("COLEMAK REG", false);
-    //   break;
+      oled_write("QUERTY REG   ", false);
+      break;
+    case 4 :
+      oled_write("NUMPAD       ", false);
+      break;
+    case 5 :
+      oled_write("SPECIAL_CHAR ", false);
+      break;
+    case 6 :
+      oled_write("RGB          ", false);
+      break;
     // case 4 :
     //   oled_write("", false);
     //   break;
