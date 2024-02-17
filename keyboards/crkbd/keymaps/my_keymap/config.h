@@ -54,4 +54,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define SPLIT_WPM_ENABLE
 #define SPLIT_OLED_ENABLE
 
-#define TAPPING_TERM 200
+#define TAPPING_TERM 130
+// #define PERMISSIVE_HOLD
+#define HOLD_ON_OTHER_KEY_PRESS

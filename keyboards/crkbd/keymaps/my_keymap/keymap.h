@@ -6,9 +6,22 @@
 #define HT_U TT(19)
 #define HT_I TT(20)
 #define HT_O TT(21)
+#define MO_ACC MO(_ACCENTS)
+#define MO_NUM MO(_NUMPAD)
+#define MO_RGB MO(_RGB)
+#define MO_NAV MO(_NAV)
+#define MO_SPE MO(_SPE)
+#define HT_ENT LT(_ACCENTS, KC_ENT)
+#define HT_SPC LT(_ACCENTS, KC_SPC)
+#define MY_LCTL KC_LCTL
+#define MY_LSFT LM(_SFT_COLEMAK_FR, MOD_LSFT)
+#define MO_COLFR MO(_COLEMAK_FR)
+#define MO_QWEREG MO(_QWERTY_REG)
+
+// #define MY_LCTL ACTION_TAP_DANCE_DOUBLE(KC_LCTL, KC_ESC)
 
 enum {
- TD_LAYERS = 0,
+ TD_Q=0,
 //  CT_CLN,
 //  CT_EGG,
 //  CT_FLSH,
@@ -20,12 +33,13 @@ enum layers{
     _ACCENTS,
     _SFT_COLEMAK_FR,
     _QWERTY_REG,
-    _NUMPAD,
-    _SPECIAL_CHAR,
-    _RGB
+    _NAV,
+    _NOTHING_FOR_THE_MOMENT,
+    _SPE,
+    _RGB    
 };
 
 enum custom_keycodes {
     MY_QUOTE = SAFE_RANGE,
-    MY_POINT_VIRGULE,
+    ESC_TAB,
 };
