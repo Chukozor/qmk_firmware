@@ -290,6 +290,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	
 	        return false;
 
+        case MY_NAV: // I am an alias for MO(_NAV)
+          static uint8_t pressed_count = 0;
+          
+          if (record->event.pressed) {
+              pressed_count++;
+          } else {
+              pressed_count--;
+              if (pressed_count) {
+                  return false;
+              }
+          }
+          
+          return true;
+          
         // case HT_SPC:
 	      //   if (record->tap.count) { // tapped
 	      //   	if (!record->event.pressed) {
@@ -314,13 +328,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // _COLEMAK_FR
     [_COLEMAK_FR] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-     ESC_TAB, TD(TD_Q),    FR_W,    KC_F,    KC_P,    KC_G,                         KC_J,    KC_L,    HT_U,    KC_Y, FR_QUOT,  KC_TAB,
+     ESC_TAB,     FR_Q,    FR_W,    KC_F,    KC_P,    KC_G,                         KC_J,    KC_L,    HT_U,    KC_Y, FR_QUOT,  KC_TAB,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       MY_LCTL,    FR_A,    KC_R,    KC_S,    KC_T,    KC_D,                         KC_H,    KC_N,    HT_E,    HT_I,    HT_O, MY_LCTL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       MY_LSFT,    FR_Z,    KC_X,    HT_C,    KC_V,    KC_B,                         KC_K,    FR_M, FR_COMM,  FR_DOT, FR_QUES, MY_LSFT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,  MO_NAV,  HT_SPC,     HT_ENT,  MO_SPE,  KC_RALT 
+                                          KC_LGUI,  MY_NAV,  HT_SPC,     HT_ENT,  MO_SPE,  KC_RALT 
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -354,13 +368,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // QWERTY REG, especially for keybr.com
     [_QWERTY_REG] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-     ESC_TAB, TD(TD_Q),    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,   KC_TAB,
+     ESC_TAB,     KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,   KC_TAB,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       MY_LCTL,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, MY_LCTL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, MY_LSFT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,  MO_NAV,  HT_SPC,     HT_ENT,  MO_SPE,  KC_RALT 
+                                          KC_LGUI,  MY_NAV,  HT_SPC,     HT_ENT,  MO_SPE,  KC_RALT 
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -373,7 +387,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_0,    KC_1,    KC_2,    KC_3, XXXXXXX,                      XXXXXXX, KC_PGUP, XXXXXXX, KC_PGDN, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,    _______,  MO_NAV, _______
+                                          _______, _______, _______,    _______, MY_NAV, _______
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -385,7 +399,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,  MO_SPE,  KC_SPC,     KC_ENT,  MO_NAV, KC_RALT
+                                          KC_LGUI,  MO_SPE,  KC_SPC,     KC_ENT,  MY_NAV, KC_RALT
                                       //`--------------------------'  `--------------------------'
   ),
     [_SPE] = LAYOUT_split_3x6_3(
