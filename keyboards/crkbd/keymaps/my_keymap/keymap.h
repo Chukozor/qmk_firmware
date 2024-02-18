@@ -10,7 +10,6 @@
 #define MO_NUM MO(_NUMPAD)
 #define MO_RGB MO(_RGB)
 #define MO_NAV MO(_NAV)
-#define MO_NAV_B LT(_NAV, KC_F13)
 #define MY_NAV MO(_NAV)
 #define MO_SPE MO(_SPE)
 #define HT_ENT LT(_ACCENTS, KC_ENT)
@@ -44,4 +43,5 @@ enum layers{
 enum custom_keycodes {
     MY_QUOTE = SAFE_RANGE,
     ESC_TAB,
+    MY_PVIRG,
 };

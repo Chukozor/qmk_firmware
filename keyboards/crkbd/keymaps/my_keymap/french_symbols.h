@@ -16,4 +16,5 @@ void tap_u_grave(void);
 void tap_u_circ(void);
 
 void tap_o_circ(void);
+void tap_point_virgule(void);
 

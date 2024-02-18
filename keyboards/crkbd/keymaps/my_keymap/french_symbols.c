@@ -89,3 +89,10 @@ void tap_o_circ(void) {
 	tap_code(KC_KP_7);
 	unregister_mods(MOD_BIT_LALT);
 }
+
+void tap_point_virgule(void) {
+	add_mods(MOD_BIT_LALT);
+	tap_code(KC_KP_5);
+	tap_code(KC_KP_9);
+	unregister_mods(MOD_BIT_LALT);
+}
