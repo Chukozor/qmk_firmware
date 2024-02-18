@@ -1,11 +1,17 @@
 #pragma once
 
-#define HT_E TT(16) // aliases
-#define HT_C TT(17)
-#define HT_A TT(18)
-#define HT_U TT(19)
-#define HT_I TT(20)
-#define HT_O TT(21)
+// #define LEAST TT(0)
+
+#define HT_E    TT(16)
+#define HT_C    TT(17)
+#define HT_A    TT(18)
+#define HT_U    TT(19)
+#define HT_I    TT(20)
+#define HT_O    TT(21)
+#define ESC_TAB TT(22)
+
+// #define MOST TT(31)
+
 #define MO_ACC MO(_ACCENTS)
 #define MO_NUM MO(_NUMPAD)
 #define MO_RGB MO(_RGB)
@@ -42,6 +48,6 @@ enum layers{
 
 enum custom_keycodes {
     MY_QUOTE = SAFE_RANGE,
-    ESC_TAB,
-    MY_PVIRG,
+    // ESC_TAB,
+    // MY_PVIRG,
 };

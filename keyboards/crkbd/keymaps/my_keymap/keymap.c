@@ -149,10 +149,10 @@ bool oled_task_user() {
 
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]){
-    &ko_make_with_layers(MOD_MASK_SHIFT, FR_COMM, FR_SCLN, 1 << 0), 
-    &ko_make_with_layers(MOD_MASK_SHIFT, FR_DOT,  FR_COLN, 1 << 0),
-    &ko_make_with_layers(MOD_MASK_SHIFT, FR_QUES, FR_EXLM, 1 << 0),
-    &ko_make_with_layers(MOD_MASK_SHIFT, FR_QUOT, FR_DQUO, 1 << 0),
+    &ko_make_with_layers(MOD_MASK_SHIFT, FR_COMM, FR_SCLN, 1 << _SFT_COLEMAK_FR), // check if it works
+    &ko_make_with_layers(MOD_MASK_SHIFT, FR_DOT,  FR_COLN, 1 << _COLEMAK_FR),
+    &ko_make_with_layers(MOD_MASK_SHIFT, FR_QUES, FR_EXLM, 1 << _COLEMAK_FR),
+    &ko_make_with_layers(MOD_MASK_SHIFT, FR_QUOT, FR_DQUO, 1 << _COLEMAK_FR),
     // &ko_make_with_layers(MOD_MASK_SHIFT, FR_AT,   FR_AGRV, 1 << 2);
     
     NULL // Null terminate the array of overrides!
@@ -287,59 +287,57 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         	return false;
 
         case ESC_TAB:
-	        if (record->tap.count) { // tapped
-	        	if (!record->event.pressed) {
-	        		return false;
-	        	}
-	        		tap_code(KC_ESC);
-	        } else { // held
-	        	if (!record->event.pressed) {
-	        		return false;
-	        	}
-	        		tap_code(KC_TAB);
-	        }
-	
-	        return false;
-
-        case MY_NAV: // I am an alias for MO(_NAV)
-          static uint8_t pressed_count = 0;
-          
-          if (record->event.pressed) {
-              pressed_count++;
-          } else {
-              pressed_count--;
-              if (pressed_count) {
-                  return false;
-              }
-          }
-          
-          return true;
-
-        case MY_PVIRG:
-          if (!record->event.pressed) {
+            if (record->tap.count) { // tapped
+                if (record->event.pressed) {
+                    tap_code(KC_ESC);
+                }
+            } else { // held
+                if (record->event.pressed) {
+                    tap_code(KC_TAB);
+                }
+            }
+        
             return false;
-          }
-          if (is_shift_layer()) {
-            tap_point_virgule();
-          } else {
-            tap_point_virgule(); // TPDP nothing better to put atm here, maybe later
-          }
-          return false;
+    
+        case MY_NAV: { // I am an alias for MO(_NAV)
+            static uint8_t pressed_count = 0;
+
+            if (record->event.pressed) {
+                pressed_count++;
+            } else {
+                pressed_count--;
+                if (pressed_count) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // case MY_PVIRG:
+        //   if (!record->event.pressed) {
+        //     return false;
+        //   }
+        //   if (is_shift_layer()) {
+        //     tap_point_virgule();
+        //   } else {
+        //     tap_point_virgule(); // TPDP nothing better to put atm here, maybe later
+        //   }
+        //   return false;
 
         // case HT_SPC:
-	      //   if (record->tap.count) { // tapped
-	      //   	if (!record->event.pressed) {
-	      //   		return false;
-	      //   	}
-	      //   		tap_code(KC_SCP);
-	      //   } else { // held
-	      //   	if (!record->event.pressed) {
-	      //   		return false;
-	      //   	}
-	      //   		tap_code(KC_LGUI);
-	      //   }
-	
-	      //   return false;
+            // if (record->tap.count) { // tapped
+          //   	if (!record->event.pressed) {
+          //   		return false;
+          //   	}
+          //   		tap_code(KC_SCP);
+          //   } else { // held
+          //   	if (!record->event.pressed) {
+          //   		return false;
+          //   	}
+          //   		tap_code(KC_LGUI);
+          //   }
+           
+          //   return false;
 
     }
     
@@ -380,7 +378,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______,MY_QUOTE,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______, _______, _______, _______,                      _______, _______,MY_PVIRG,  _______, _______, _______,
+      _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
