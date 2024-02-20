@@ -149,7 +149,7 @@ bool oled_task_user() {
 
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]){
-    &ko_make_with_layers(MOD_MASK_SHIFT, FR_COMM, FR_SCLN, 1 << _SFT_COLEMAK_FR), // check if it works
+    &ko_make_with_layers(MOD_MASK_SHIFT, FR_COMM, FR_SCLN, 1 << _COLEMAK_FR), // check if it works
     &ko_make_with_layers(MOD_MASK_SHIFT, FR_DOT,  FR_COLN, 1 << _COLEMAK_FR),
     &ko_make_with_layers(MOD_MASK_SHIFT, FR_QUES, FR_EXLM, 1 << _COLEMAK_FR),
     &ko_make_with_layers(MOD_MASK_SHIFT, FR_QUOT, FR_DQUO, 1 << _COLEMAK_FR),
@@ -388,7 +388,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // QWERTY REG, especially for keybr.com
     [_QWERTY_REG] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      ESC_TAB,     KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P, ESC_TAB,
+      ESC_TAB,     KC_Q,    KC_W,    KC_E,    KC_R,   KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  ESC_TAB,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       MY_LCTL,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, MY_LCTL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
